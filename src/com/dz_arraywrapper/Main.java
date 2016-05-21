@@ -45,11 +45,11 @@ public class Main {
 		System.out.println();
 //----------------------------------------------------------------
 		try {
-			Number[] removed = new ArrayWrapper(sorted).remove(6).getArray();
+			Number[] removedByIndex = new ArrayWrapper(sorted).remove(6).getArray();
 			
 			System.out.print("Removing an element from array by index: ");
-			for (int j = 0; j < removed.length; j++) {
-				System.out.print(removed[j] + " ");
+			for (int j = 0; j < removedByIndex.length; j++) {
+				System.out.print(removedByIndex[j] + " ");
 			}
 		} catch (NullPointerException e) {
 			System.out.println("Wrong parametrs");
@@ -60,12 +60,13 @@ public class Main {
 		Double toBeRemoved = 5.53;
 		
 		try {
-			Number[] removed2 = new ArrayWrapper(sorted).remove(toBeRemoved).getArray();
+			Number[] removedByValue = new ArrayWrapper(sorted).remove(toBeRemoved).getArray();
 			
 			System.out.print("Removing an element from array by value: ");
-			for (int j = 0; j < removed2.length; j++) {
-				System.out.print(removed2[j] + " ");
+			for (int j = 0; j < removedByValue.length; j++) {
+				System.out.print(removedByValue[j] + " ");
 			}
+			
 		} catch (NullPointerException e) {
 			System.out.println("Wrong parametrs");
 		}
