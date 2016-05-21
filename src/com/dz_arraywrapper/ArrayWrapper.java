@@ -1,3 +1,4 @@
+package com.dz_arraywrapper;
 import java.util.Comparator;
 
 /**
@@ -43,9 +44,12 @@ public class ArrayWrapper {
 
 	/**
 	 * Remove element from array by index.
+	 * Should be surrounded with try-catch block.
 	 * 
 	 * @param index
 	 *            - index
+	 * @throws NullPointerException -	throws exception if parameters are wrong.
+	 * @return ArrayWrapper -	wrapper with new array inside.            
 	 */
 	public ArrayWrapper remove(int index) throws NullPointerException{
 		Number[] tmpArr = new Number[initArray.length];
@@ -67,10 +71,13 @@ public class ArrayWrapper {
 	}
 
 	/**
-	 * Remove element from array by link
+	 * Remove element from array by value.
+	 * Should be surrounded with try-catch block.
 	 * 
 	 * @param o
 	 *            - provided element
+	 * @throws NullPointerException -	throws exception if parameters are wrong.    
+	 * @return ArrayWrapper -	wrapper with new array inside.         
 	 */
 	public ArrayWrapper remove(Object o) throws NullPointerException{
 		Number[] tmpArr = new Number[initArray.length];
@@ -114,6 +121,35 @@ public class ArrayWrapper {
 
 		return new ArrayWrapper(tmpArr);
 
+	}
+	
+	/**
+	 * Reverse the order of elements in provided array.
+	 * 
+	 * @return ArrayWrapper - wrapper with reversed array inside
+	 */
+	public ArrayWrapper reverse(){
+		Number[] tmpArr = new Number[initArray.length];
+		System.arraycopy(initArray, 0, tmpArr, 0, initArray.length);
+		for (int i = 0; i < tmpArr.length/2; i++) {
+			Number tmp = tmpArr[i]; 
+			tmpArr[i] = tmpArr[tmpArr.length - i - 1];
+			tmpArr[tmpArr.length - i - 1] = tmp;
+			
+		}
+		return new ArrayWrapper(tmpArr);
+	}
+	
+	
+//--------------------------------------------------------------	
+	class MyComparator implements Comparator<Number> {
+
+		
+		@Override
+		public int compare(Number o1, Number o2) {
+
+			return (o1.intValue() - o2.intValue());
+		}
 	}
 
 }
