@@ -34,6 +34,7 @@ public class ArrayWrapper {
 	 * 
 	 * @param o
 	 *            - provided element
+	 * @return ArrayWrapper -		wrapper with new array inside           
 	 */
 	public ArrayWrapper add(Number num) {
 		Number[] tmpArr = new Number[initArray.length + 1];
