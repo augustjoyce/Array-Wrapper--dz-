@@ -1,13 +1,16 @@
 package com.dz_arraywrapper;
 
 
-public class Main {
+
+public class Main <T extends Number>{
 
 	public static void main(String[] args) {
 		
-		ArrayWrapper wrap = new ArrayWrapper(null);
-		ArrayWrapper.MyComparator comp = wrap.new MyComparator();
-
+		ArrayWrapper<Number> wrap = new ArrayWrapper<Number>(null);
+		ArrayWrapper<Number>.MyComparator comp = wrap.new MyComparator();
+		
+		Integer[] arr = wrap.<Integer>createArray(5);
+		
 		Number[] originalArray = { 567, 5.53, 12, 8, 3, -156.22, -32, 423 };
 		
 		System.out.print("Original array: ");
@@ -17,7 +20,7 @@ public class Main {
 
 		System.out.println();
 //----------------------------------------------------------------
-		Number[] added = new ArrayWrapper(originalArray).add(46).getArray();
+		Number[] added = new ArrayWrapper<Number>(originalArray).add(46).getArray();
 
 		System.out.print("Adding an element in array: ");
 		for (int j = 0; j < added.length; j++) {
@@ -26,7 +29,7 @@ public class Main {
 
 		System.out.println();
 //----------------------------------------------------------------
-		Number[] sorted = new ArrayWrapper(added).sort(comp).getArray();
+		Number[] sorted = new ArrayWrapper<Number>(added).sort(comp).getArray();
 		
 		System.out.print("Sorting array: ");
 		for (int j = 0; j < sorted.length; j++) {
@@ -35,7 +38,7 @@ public class Main {
 
 		System.out.println();
 //----------------------------------------------------------------
-		Number[] reversed = new ArrayWrapper(sorted).reverse().getArray();
+		Number[] reversed = new ArrayWrapper<Number>(sorted).reverse().getArray();
 		
 		System.out.print("Reversing array: ");
 		for (int j = 0; j < reversed.length; j++) {
@@ -45,7 +48,7 @@ public class Main {
 		System.out.println();
 //----------------------------------------------------------------
 		try {
-			Number[] removedByIndex = new ArrayWrapper(sorted).remove(6).getArray();
+			Number[] removedByIndex = new ArrayWrapper<Number>(sorted).remove(6).getArray();
 			
 			System.out.print("Removing an element from array by index: ");
 			for (int j = 0; j < removedByIndex.length; j++) {
@@ -60,7 +63,7 @@ public class Main {
 		Double toBeRemoved = 5.53;
 		
 		try {
-			Number[] removedByValue = new ArrayWrapper(sorted).remove(toBeRemoved).getArray();
+			Number[] removedByValue = new ArrayWrapper<Number>(sorted).remove(toBeRemoved).getArray();
 			
 			System.out.print("Removing an element from array by value: ");
 			for (int j = 0; j < removedByValue.length; j++) {
@@ -70,6 +73,14 @@ public class Main {
 		} catch (NullPointerException e) {
 			System.out.println("Wrong parametrs");
 		}
+		System.out.println();
+
+		
+		System.out.println("Average value: " + new ArrayWrapper<Number>(sorted).findAverageValue());
+		System.out.println("Maximal value: " + new ArrayWrapper<Number>(sorted).findMaxValue());
+		System.out.println("Minimal value: " + new ArrayWrapper<Number>(sorted).findMinValue());
 	}
+		
+
 
 }

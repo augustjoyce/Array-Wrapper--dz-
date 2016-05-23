@@ -1,5 +1,7 @@
 package com.dz_arraywrapper;
+import java.util.Arrays;
 import java.util.Comparator;
+
 
 /**
  * This class holds an array of ANY object and provides base algorithms to work
@@ -9,22 +11,38 @@ import java.util.Comparator;
  * @author August Joyce
  *
  */
-public class ArrayWrapper {
-
-	private Number initArray[];
-
-	ArrayWrapper(Number initArray[]) {
+public class ArrayWrapper <T extends Number>{
+	
+	private T initArray[];
+	
+	ArrayWrapper(T initArray[]) {
 		this.initArray = initArray;
 	}
 	
-	
+	ArrayWrapper() {
+		
+	}
+	/**
+	 * Initialize an array of defined size.
+	 * 
+	 * @param size -	size of array.
+	 * @return array -	array
+	 */
+	@SuppressWarnings("unchecked")
+	public <K extends Number> K[] createArray(int size){
+		
+		K[] array; Number[] array2 = new Number[size];
+		array = (K[]) Arrays.copyOf(array2, size);
+		return array;
+	}
 
+	
 	/**
 	 * Get array from the wrapper.
 	 * 
 	 * @return initArray - array in the wrapper
 	 */
-	public Number[] getArray() {
+	public T[] getArray() {
 		return initArray;
 
 	}
@@ -36,11 +54,11 @@ public class ArrayWrapper {
 	 *            - provided element
 	 * @return ArrayWrapper -		wrapper with new array inside           
 	 */
-	public ArrayWrapper add(Number num) {
+	public ArrayWrapper<Number> add(T o) {
 		Number[] tmpArr = new Number[initArray.length + 1];
 		System.arraycopy(initArray, 0, tmpArr, 0, initArray.length);
-		tmpArr[tmpArr.length - 1] = num;
-		return new ArrayWrapper(tmpArr);
+		tmpArr[tmpArr.length - 1] = o;
+		return new ArrayWrapper<Number>(tmpArr);
 	}
 
 	/**
@@ -52,7 +70,7 @@ public class ArrayWrapper {
 	 * @throws NullPointerException -	throws exception if parameters are wrong.
 	 * @return ArrayWrapper -	wrapper with new array inside.            
 	 */
-	public ArrayWrapper remove(int index) throws NullPointerException{
+	public ArrayWrapper<Number> remove(int index) throws NullPointerException{
 		Number[] tmpArr = new Number[initArray.length];
 		System.arraycopy(initArray, 0, tmpArr, 0, initArray.length);
 		for (int i = 0; i < tmpArr.length; i++) {
@@ -63,7 +81,7 @@ public class ArrayWrapper {
 				}
 				Number[] tmpArr2 = new Number[tmpArr.length - 1];
 				System.arraycopy(tmpArr, 0, tmpArr2, 0, tmpArr.length - 1);
-				return new ArrayWrapper(tmpArr2);
+				return new ArrayWrapper<Number>(tmpArr2);
 			}
 		}
 		
@@ -80,7 +98,7 @@ public class ArrayWrapper {
 	 * @throws NullPointerException -	throws exception if parameters are wrong.    
 	 * @return ArrayWrapper -	wrapper with new array inside.         
 	 */
-	public ArrayWrapper remove(Object o) throws NullPointerException{
+	public ArrayWrapper<Number> remove(T o) throws NullPointerException{
 		Number[] tmpArr = new Number[initArray.length];
 		System.arraycopy(initArray, 0, tmpArr, 0, initArray.length);
 		for (int i = 0; i < tmpArr.length; i++) {
@@ -90,7 +108,7 @@ public class ArrayWrapper {
 				}
 				Number[] tmpArr2 = new Number[tmpArr.length - 1];
 				System.arraycopy(tmpArr, 0, tmpArr2, 0, tmpArr.length - 1);
-				return new ArrayWrapper(tmpArr2);
+				return new ArrayWrapper<Number>(tmpArr2);
 			}
 		}
 		
@@ -106,7 +124,7 @@ public class ArrayWrapper {
 	 *            - provided comparator
 	 * @return ArrayWrapper - wrapper with sorted array inside
 	 */
-	public ArrayWrapper sort(Comparator<Number> comparator) {
+	public ArrayWrapper<Number> sort(Comparator<Number> comparator) {
 		Number tmpNum;
 		Number[] tmpArr = new Number[initArray.length];
 		System.arraycopy(initArray, 0, tmpArr, 0, initArray.length);
@@ -120,7 +138,7 @@ public class ArrayWrapper {
 			}
 		}
 
-		return new ArrayWrapper(tmpArr);
+		return new ArrayWrapper<Number>(tmpArr);
 
 	}
 	
@@ -129,7 +147,7 @@ public class ArrayWrapper {
 	 * 
 	 * @return ArrayWrapper - wrapper with reversed array inside
 	 */
-	public ArrayWrapper reverse(){
+	public ArrayWrapper<Number> reverse(){
 		Number[] tmpArr = new Number[initArray.length];
 		System.arraycopy(initArray, 0, tmpArr, 0, initArray.length);
 		for (int i = 0; i < tmpArr.length/2; i++) {
@@ -138,9 +156,48 @@ public class ArrayWrapper {
 			tmpArr[tmpArr.length - i - 1] = tmp;
 			
 		}
-		return new ArrayWrapper(tmpArr);
+		return new ArrayWrapper<Number>(tmpArr);
 	}
 	
+	/**
+	 * Find minimal element in array.
+	 * @return minValue -	minimal element
+	 */
+	public Number findMinValue(){
+		Number minValue = Long.MAX_VALUE;
+		for (int i = 0; i < initArray.length; i++) {
+			if (minValue.doubleValue() > initArray[i].doubleValue()) {
+				minValue = initArray[i];
+			}
+		}
+		return minValue;
+	}
+	
+	/**
+	 * Find maximal element in array.
+	 * @return maxValue -	maximal element
+	 */
+	public Number findMaxValue(){
+		Number maxValue = Long.MIN_VALUE;
+		for (int i = 0; i < initArray.length; i++) {
+			if (maxValue.doubleValue() < initArray[i].doubleValue()) {
+				maxValue = initArray[i];
+			}
+		}
+		return maxValue;
+	}
+	/**
+	 * Find an average value of all elements in array.
+	 * @return averageValue -	average value
+	 */
+	public double findAverageValue(){
+		double sum = 0d;
+		for (int i = 0; i < initArray.length; i++) {
+			sum += initArray[i].doubleValue();
+		}
+		double averageValue = sum/initArray.length;
+		return averageValue;
+	}
 	
 //--------------------------------------------------------------	
 	class MyComparator implements Comparator<Number> {
