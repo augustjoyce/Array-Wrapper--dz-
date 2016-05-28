@@ -1,4 +1,5 @@
 package com.dz_arraywrapper;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -29,11 +30,9 @@ public class ArrayWrapper <T extends Number>{
 	 * @return array -	array
 	 */
 	@SuppressWarnings("unchecked")
-	public <K extends Number> K[] createArray(int size){
-		
-		K[] array; Number[] array2 = new Number[size];
-		array = (K[]) Arrays.copyOf(array2, size);
-		return array;
+	public <K extends Number> K[] createArray(Class<K> clazz, int size) throws NoSuchMethodException, ClassNotFoundException {
+        K[] array = (K[]) Array.newInstance(clazz, size);
+        return array;
 	}
 
 	
@@ -54,7 +53,8 @@ public class ArrayWrapper <T extends Number>{
 	 *            - provided element
 	 * @return ArrayWrapper -		wrapper with new array inside           
 	 */
-	public ArrayWrapper<Number> add(T o) {
+	public ArrayWrapper<Number> add(T o) throws AddingNullException{
+		if (o == null) throw new AddingNullException("You have tried to add null");
 		Number[] tmpArr = new Number[initArray.length + 1];
 		System.arraycopy(initArray, 0, tmpArr, 0, initArray.length);
 		tmpArr[tmpArr.length - 1] = o;

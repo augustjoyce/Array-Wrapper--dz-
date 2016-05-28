@@ -4,12 +4,18 @@ package com.dz_arraywrapper;
 
 public class Main <T extends Number>{
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws AddingNullException {
 		
 		ArrayWrapper<Number> wrap = new ArrayWrapper<Number>(null);
 		ArrayWrapper<Number>.MyComparator comp = wrap.new MyComparator();
 		
-		Integer[] arr = wrap.<Integer>createArray(5);
+		try {
+			Integer[] arrInt = wrap.createArray(Integer.class, 8);
+		} catch (NoSuchMethodException e1) {
+			System.out.println("Something is fucking wrong");
+		} catch (ClassNotFoundException e1) {
+			System.out.println("Something is fucking wrong");
+		}
 		
 		Number[] originalArray = { 567, 5.53, 12, 8, 3, -156.22, -32, 423 };
 		
@@ -20,7 +26,7 @@ public class Main <T extends Number>{
 
 		System.out.println();
 //----------------------------------------------------------------
-		Number[] added = new ArrayWrapper<Number>(originalArray).add(46).getArray();
+		Number[] added = new ArrayWrapper<Number>(originalArray).add(54).getArray();
 
 		System.out.print("Adding an element in array: ");
 		for (int j = 0; j < added.length; j++) {
